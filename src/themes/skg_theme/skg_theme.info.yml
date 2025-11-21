@@ -1,0 +1,14 @@
+name: SKG Theme
+description: Space Kitty Games custom theme
+
+type: theme
+
+core_version_requirement: ^10 || ^11
+
+base theme: false
+
+regions:
+  top_navigation: 'Top Navigation' # Navigation on top of the page 
+  header: 'Header'                 # Top header (slideshow)
+  content: 'Content'               # Main body content
+  footer: 'Footer'                 # Main footer

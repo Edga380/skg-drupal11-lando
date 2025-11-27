@@ -1,0 +1,25 @@
+{
+  "name": "skg-frontend",
+  "version": "1.0.0",
+  "description": "SKG Drupal 11 frontend",
+  "scripts": {
+    "dev": "webpack --watch --mode development --config webpack.config.js"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.22.9",
+    "@babel/preset-env": "^7.22.9",
+    "babel-loader": "^9.1.3",
+    "copy-webpack-plugin": "^11.0.0",
+    "file-loader": "^6.2.0",
+    "mini-css-extract-plugin": "^2.8.0",
+    "css-loader": "^7.1.2",
+    "postcss": "^8.4.32",
+    "postcss-loader": "^7.3.3",
+    "sass": "^1.66.1",
+    "sass-loader": "^13.3.2",
+    "url-loader": "^4.1.1",
+    "webpack": "^5.88.2",
+    "webpack-cli": "^5.1.4",
+    "write-file-webpack-plugin": "^4.5.0"
+  }
+}

@@ -32,10 +32,14 @@
     },
     "scripts": {
         "post-install-cmd": [
-            "DrupalProject\\Composer\\ScriptHandler::copySettingsFile"
+            "DrupalProject\\Composer\\ScriptsHandler::copySettingsFile",
+            "DrupalProject\\Composer\\ScriptsHandler::copyThemesFolder",
+            "DrupalProject\\Composer\\ScriptsHandler::copyAssetsFolder"
         ],
         "post-update-cmd": [
-            "DrupalProject\\Composer\\ScriptHandler::copySettingsFile"
+            "DrupalProject\\Composer\\ScriptsHandler::copySettingsFile",
+            "DrupalProject\\Composer\\ScriptsHandler::copyThemesFolder",
+            "DrupalProject\\Composer\\ScriptsHandler::copyAssetsFolder"
         ]
     },
     "config": {

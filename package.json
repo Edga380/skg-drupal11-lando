@@ -1,0 +1,12 @@
+{
+  "name": "skg-watcher",
+  "version": "1.0.0",
+  "description": "SKG Watcher",
+  "scripts": {
+    "dev": "node scripts/watch/watcher.js"
+  },
+  "devDependencies": {
+    "chokidar": "^4.0.3",
+    "fs-extra": "^11.3.2"
+  }
+}

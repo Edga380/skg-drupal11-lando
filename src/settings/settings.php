@@ -89,7 +89,7 @@
  * @endcode
  */
 
-$lando_info = json_decode(getenv('LANDO_INFO', TRUE));
+$lando_info = json_decode(getenv('LANDO_INFO'), TRUE);
 
 $databases['default']['default'] = array (
     'database' => $lando_info['database']['creds']['database'],

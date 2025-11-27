@@ -8,6 +8,9 @@ vendor
 # Node #
 node_modules
 
+# Webpack #
+src/frontend/assets
+
 # Environment variables #
 .env
 /.eslintignore

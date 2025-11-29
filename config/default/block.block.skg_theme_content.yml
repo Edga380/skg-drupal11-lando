@@ -1,0 +1,22 @@
+uuid: a2d0c9fb-b00c-490a-ba1b-dd4572de5ffd
+langcode: en-gb
+status: true
+dependencies:
+  module:
+    - system
+  theme:
+    - skg_theme
+_core:
+  default_config_hash: erQSEZF2XUjNmgTl0uNRBzmg18ZGXwUcw2FhApoeuHk
+id: skg_theme_content
+theme: skg_theme
+region: content
+weight: 0
+provider: null
+plugin: system_main_block
+settings:
+  id: system_main_block
+  label: 'Main page content'
+  label_display: '0'
+  provider: system
+visibility: {  }

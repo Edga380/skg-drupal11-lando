@@ -5,50 +5,55 @@ const chokidar = require('chokidar');
 const watchList = [
   {
     src: path.resolve(__dirname, '../../src/frontend/assets'),
-    dest: path.resolve(__dirname, '../../web/themes/custom/skg_theme/assets')
+    dest: path.resolve(__dirname, '../../web/themes/custom/skg_theme/assets'),
+    exclude: []
   },
   {
     src: path.resolve(__dirname, '../../src/themes/skg_theme'),
-    dest: path.resolve(__dirname, '../../web/themes/custom/skg_theme')
+    dest: path.resolve(__dirname, '../../web/themes/custom/skg_theme'),
+    exclude: []
+  },
+  {
+    src: path.resolve(__dirname, '../../src/frontend/src/components'),
+    dest: path.resolve(__dirname, '../../web/themes/custom/skg_theme/components'),
+    exclude: ['.scss', '.js']
   }
 ];
 
-const copyFiles = async (src, dest) => {
-  try {
-    await fs.copy(src, dest, { overwrite: true, errorOnExist: false });
-    console.log(`Synced: ${path.relative(process.cwd(), src)}`);
-  } catch (err) {
-    console.error(`Error copying ${src} -> ${dest}:`, err);
-  }
+const isExcluded = (filePath, excludeList) => {
+  return excludeList.some(ext => filePath.endsWith(ext));
 };
 
-const removeFile = async (src, dest) => {
-  try {
-    // Calculate the relative path of the deleted file
-    const relativePath = path.relative(src, dest);
-    const targetPath = path.resolve(dest, relativePath);
+watchList.forEach(({ src, dest, exclude }) => {
+  chokidar.watch(src, { ignoreInitial: false, persistent: true })
+    .on('add', filePath => {
+      if (isExcluded(filePath, exclude)) return;
 
-    await fs.remove(targetPath);
-    console.log(`Removed: ${targetPath}`);
-  } catch (err) {
-    console.error(`Error removing ${dest}:`, err);
-  }
-};
+      const relative = path.relative(src, filePath);
+      const target = path.join(dest, relative);
+      fs.copy(filePath, target, { overwrite: true })
+        .then(() => console.log(`Copied: ${target}`))
+        .catch(err => console.error(`Error copying ${filePath}:`, err));
+    })
+    .on('change', filePath => {
+      if (isExcluded(filePath, exclude)) return;
 
-watchList.forEach(({ src, dest }) => {
-  const watcher = chokidar.watch(src, { ignoreInitial: false, persistent: true });
+      const relative = path.relative(src, filePath);
+      const target = path.join(dest, relative);
+      fs.copy(filePath, target, { overwrite: true })
+        .then(() => console.log(`Updated: ${target}`))
+        .catch(err => console.error(`Error updating ${filePath}:`, err));
+    })
+    .on('unlink', filePath => {
+      if (isExcluded(filePath, exclude)) return;
 
-  watcher
-    .on('add', () => copyFiles(src, dest))
-    .on('change', () => copyFiles(src, dest))
-    .on('unlink', (filePath) => {
       const relative = path.relative(src, filePath);
       const target = path.join(dest, relative);
       fs.remove(target)
         .then(() => console.log(`Deleted: ${target}`))
         .catch(err => console.error(`Error deleting ${target}:`, err));
     })
-    .on('unlinkDir', (dirPath) => {
+    .on('unlinkDir', dirPath => {
       const relative = path.relative(src, dirPath);
       const target = path.join(dest, relative);
       fs.remove(target)
@@ -57,4 +62,4 @@ watchList.forEach(({ src, dest }) => {
     });
 });
 
-console.log('Watching assets and theme folders...');
+console.log('Watching for changes...');

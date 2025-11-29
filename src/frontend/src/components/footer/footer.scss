@@ -1,0 +1,11 @@
+.footer {
+    background-color: var(--bg-secondary);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 5rem;
+
+    &__copyright{
+        text-align: center;
+    }
+}

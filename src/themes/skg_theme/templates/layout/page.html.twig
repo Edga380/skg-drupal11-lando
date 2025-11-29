@@ -1,12 +1,32 @@
+<nav>
+  {% if page.top_navigation %}
+    {% include '@components/navigation-bar/navigation-bar.html.twig' with 
+      { 
+        items: page.top_navigation 
+      } %}
+  {% endif %}
+</nav>
+
 <header>
-  {{ page.top_navigation }}
   {{ page.header }}
 </header>
 
 <main>
   {{ page.content }}
+    {% include '@components/image-text-section/image-text-section.html.twig' with {
+      image_url: 'https://edga380.github.io/hobbypage/images/website/indexpageslider/img1.png',
+      title: 'Our Awesome Game',
+      text: 'This is a short description of the game. Learn more about its features and gameplay.',
+      button_text: 'View More',
+      button_url: '/games/awesome-game'
+    } %}
 </main>
 
 <footer>
-  {{ page.footer }}
+  {% if page.footer %}
+    {% include '@components/footer/footer.html.twig' with
+      {
+        content: page.footer
+      } %}
+  {% endif %}
 </footer>

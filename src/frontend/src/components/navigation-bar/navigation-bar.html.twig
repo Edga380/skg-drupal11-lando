@@ -1,0 +1,25 @@
+{#
+/**
+ * Navigation-bar Component
+ *
+ * Variables:
+ * - items: array of menu items (each item can have 'url' and 'title')
+ */
+#}
+
+{% if items %}
+  <nav class="navigation-bar">
+    <div>
+      <a href="/">
+        <img class="navigation-bar__logo" src="https://edga380.github.io/hobbypage/images/website/topleftlogo.png" alt="Space Kitty Games Logo">
+      </a>
+    </div>
+    <ul class="navigation-bar__list">
+      {% for item in items %}
+        <li class="navigation-bar__item">
+          <a href="{{ item.url }}" class="navigation-bar__link">{{ item.title }}</a>
+        </li>
+      {% endfor %}
+    </ul>
+  </nav>
+{% endif %}

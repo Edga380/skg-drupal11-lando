@@ -3,14 +3,16 @@ description: Space Kitty Games custom theme
 type: theme
 core_version_requirement: ^11
 base theme: false
-
 libraries:
   - core/normalize
   - core/drupal
   - skg_theme/global
-
 regions:
   top_navigation: 'Top Navigation'
   header: 'Header'
   content: 'Content'
   footer: 'Footer'
+components:
+  namespaces:
+    components:
+      - components

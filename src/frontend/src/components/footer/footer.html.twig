@@ -1,0 +1,16 @@
+{#
+/**
+ * Footer Component
+ *
+ * Variables:
+ * - content: copyright text
+ */
+#}
+
+{% if content %}
+<div class="footer">
+  <p class="footer__copyright">
+    {{ content|raw }}
+  </p>
+</div>
+{% endif %}

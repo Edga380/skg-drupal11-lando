@@ -1,0 +1,43 @@
+.navigation-bar {
+  background-color: var(--bg-secondary);
+  display: flex;
+  height: 3rem;
+
+  &__logo {
+    height: 100%;
+
+    &:hover {
+      filter: brightness(110%);
+    }
+  }
+
+  &__list {
+    display: flex;
+    flex-direction: row;
+    list-style: none;
+  }
+
+  &__item {
+    display: flex;
+    align-items: center;
+
+    &:hover {
+      background: var(--button-gradient);
+    }
+  }
+  
+  &__link {
+    display: flex;
+    align-items: center;
+    color: var(--text);
+    text-decoration: none;
+    font-size: large;
+    height: 100%;
+    padding: 0 1.6rem;
+    transition: color 0.2s ease-in-out;
+
+    &:hover {
+      color: var(--text-hover);
+    }
+  }
+}

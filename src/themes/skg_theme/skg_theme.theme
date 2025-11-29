@@ -1,0 +1,76 @@
+<?php
+
+/**
+ * Implements hook_preprocess_page().
+ */
+function skg_theme_preprocess_page(array &$variables) {
+  // -----------------------------
+  // Top Navigation
+  // -----------------------------
+  $menu_name = 'main';
+  $menu_tree = \Drupal::menuTree();
+
+  $parameters = $menu_tree->getCurrentRouteMenuTreeParameters($menu_name);
+  $tree = $menu_tree->load($menu_name, $parameters);
+
+  $manipulators = [
+    ['callable' => 'menu.default_tree_manipulators:checkAccess'],
+    ['callable' => 'menu.default_tree_manipulators:generateIndexAndSort'],
+  ];
+
+  $tree = $menu_tree->transform($tree, $manipulators);
+
+  $items = [];
+  foreach ($tree as $element) {
+    $items[] = [
+      'title' => $element->link->getTitle(),
+      'url' => $element->link->getUrlObject()->toString(),
+    ];
+  }
+
+  $variables['page']['top_navigation'] = $items;
+
+  // -----------------------------
+  // Footer
+  // -----------------------------
+  if (!empty($variables['page']['footer']['skg_theme_mainfooter'])) {
+    $block = $variables['page']['footer']['skg_theme_mainfooter'];
+
+    $footer_content = \Drupal::service('renderer')->renderPlain($block);
+
+    // Replace a placeholder [current-year] with actual year
+    $footer_content = str_replace('[current-year]', date('Y'), $footer_content);
+
+    $variables['page']['footer'] = $footer_content;
+  }
+}
+
+/**
+ * Implements hook_preprocess_block().
+ */
+function skg_theme_preprocess_block(array &$variables) {
+  // Check for our block type.
+  $block = $variables['elements']['#id'] ?? '';
+  $block_type = $variables['elements']['#base_plugin_id'] ?? '';
+
+  if ($block_type === 'block_content') {
+    $bundle = $variables['elements']['#bundle'] ?? '';
+    if ($bundle === 'image_text_section') {
+      // Get fields.
+      $content = $variables['elements']['#block_content']->get('body') ?? '';
+      $image = $variables['elements']['#block_content']->get('field_image')->entity ?? null;
+      $title = $variables['elements']['#block_content']->get('field_title')->value ?? '';
+      $text = $variables['elements']['#block_content']->get('field_text')->value ?? '';
+      $button_text = $variables['elements']['#block_content']->get('field_button_text')->value ?? '';
+      $button_link = $variables['elements']['#block_content']->get('field_button_link')->uri ?? '';
+
+      $variables['component_data'] = [
+        'image_url' => $image ? file_create_url($image->getFileUri()) : '',
+        'title' => $title,
+        'text' => $text,
+        'button_text' => $button_text,
+        'button_url' => $button_link,
+      ];
+    }
+  }
+}

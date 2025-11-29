@@ -15,6 +15,10 @@ class ScriptsHandler {
         self::copyFile(__DIR__ . '/../../src/settings', __DIR__ . '/../../web/sites/default', 'settings.php');
     }
 
+    public static function copyServicesFile() {
+        self::copyFile(__DIR__ . '/../../src/settings', __DIR__ . '/../../web/sites/default', 'services.yml');
+    }
+
     public static function copyThemesFolder() {
         self::copyFolder(__DIR__ . '/../../src/themes', __DIR__ . '/../../web/themes/custom');
     }

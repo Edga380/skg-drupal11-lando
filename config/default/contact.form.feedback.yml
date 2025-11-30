@@ -1,0 +1,14 @@
+uuid: a88c5fa3-aff6-4ee9-9b5a-b05596c0cdd1
+langcode: en-gb
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: vymHlgJy26BuI5GGj9-IXjwR3dRC5C0tij4BpWJnoqw
+id: feedback
+label: 'Website feedback'
+recipients:
+  - skg@skg.com
+reply: ''
+weight: 0
+message: 'Your message has been sent.'
+redirect: ''

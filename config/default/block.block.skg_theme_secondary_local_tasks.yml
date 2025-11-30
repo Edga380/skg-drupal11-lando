@@ -1,0 +1,22 @@
+uuid: ba592b7b-e86f-4ec7-82bb-ecd69bd561ef
+langcode: en-gb
+status: true
+dependencies:
+  theme:
+    - skg_theme
+_core:
+  default_config_hash: ydSxdq7R66I8UMC460rOzlfzvlUL4VRbdwc6z9DWaUI
+id: skg_theme_secondary_local_tasks
+theme: skg_theme
+region: top_navigation
+weight: -2
+provider: null
+plugin: local_tasks_block
+settings:
+  id: local_tasks_block
+  label: 'Secondary tabs'
+  label_display: '0'
+  provider: core
+  primary: false
+  secondary: true
+visibility: {  }

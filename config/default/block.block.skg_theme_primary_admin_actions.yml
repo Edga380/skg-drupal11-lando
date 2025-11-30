@@ -1,0 +1,20 @@
+uuid: b5f01b27-6be5-400f-bcc5-ac58b52e9eba
+langcode: en-gb
+status: true
+dependencies:
+  theme:
+    - skg_theme
+_core:
+  default_config_hash: Q9_2whdOj1YIomfvsIfopROW4FT_X5pY0DjdOiOaQ5U
+id: skg_theme_primary_admin_actions
+theme: skg_theme
+region: top_navigation
+weight: -5
+provider: null
+plugin: local_actions_block
+settings:
+  id: local_actions_block
+  label: 'Primary admin actions'
+  label_display: '0'
+  provider: core
+visibility: {  }

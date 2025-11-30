@@ -1,8 +1,0 @@
-uuid: edac3dd7-2441-4241-b15b-7f28d854778a
-langcode: en-gb
-status: true
-dependencies: {  }
-id: image_text_section
-label: 'Image Text Section'
-revision: false
-description: 'Selected image on the left side on the right side Title, text optional button.'

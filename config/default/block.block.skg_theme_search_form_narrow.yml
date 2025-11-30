@@ -1,0 +1,23 @@
+uuid: beb0de56-c12e-40b6-9247-a909358cfaab
+langcode: en-gb
+status: true
+dependencies:
+  module:
+    - search
+  theme:
+    - skg_theme
+_core:
+  default_config_hash: _nZjxxdypO6xrOAJkCYD81v0L7wh2zbCAVO7_C-UKIc
+id: skg_theme_search_form_narrow
+theme: skg_theme
+region: top_navigation
+weight: -4
+provider: null
+plugin: search_form_block
+settings:
+  id: search_form_block
+  label: 'Search form (narrow)'
+  label_display: '0'
+  provider: search
+  page_id: null
+visibility: {  }

@@ -1,0 +1,22 @@
+uuid: e94e0497-825d-46f0-bf23-1af05a6f1ad1
+langcode: en-gb
+status: true
+dependencies:
+  module:
+    - system
+  theme:
+    - skg_theme
+_core:
+  default_config_hash: eYL19CLDyinGTWYQfBD1DswWzglEotE_kHnHx3AxTXM
+id: skg_theme_powered
+theme: skg_theme
+region: top_navigation
+weight: 0
+provider: null
+plugin: system_powered_by_block
+settings:
+  id: system_powered_by_block
+  label: 'Powered by Drupal'
+  label_display: '0'
+  provider: system
+visibility: {  }

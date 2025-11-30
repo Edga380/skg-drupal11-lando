@@ -1,0 +1,22 @@
+uuid: 780a997a-7824-41f1-ae00-a8636fb1d039
+langcode: en-gb
+status: true
+dependencies:
+  module:
+    - help
+  theme:
+    - skg_theme
+_core:
+  default_config_hash: VfPFqqxfkomud5CO8DUijw85QIl9GIxh_nIxLOYESxg
+id: skg_theme_help
+theme: skg_theme
+region: top_navigation
+weight: 0
+provider: null
+plugin: help_block
+settings:
+  id: help_block
+  label: Help
+  label_display: '0'
+  provider: help
+visibility: {  }

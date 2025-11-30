@@ -21,7 +21,12 @@
 }
 
 body {
+  background: url("https://github.com/Edga380/hobbypage/blob/main/images/website/indexbg.png?raw=true");
+  background-position: center;
+  background-repeat: no-repeat;
   background-color: var(--bg-primary);
+  background-size: cover;
+  height: 100vh;
   color: var(--text);
   font-family: monospace;
 }

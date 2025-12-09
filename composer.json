@@ -11,11 +11,16 @@
     ],
     "require": {
         "composer/installers": "^2.3",
+        "drupal/admin_toolbar": "^3.6",
         "drupal/components": "^3.1",
         "drupal/core-composer-scaffold": "11.2.8",
         "drupal/core-project-message": "11.2.8",
         "drupal/core-recipe-unpack": "11.2.8",
         "drupal/core-recommended": "11.2.8",
+        "drupal/devel": "^5.3",
+        "drupal/gin": "^5.0",
+        "drupal/gin_toolbar": "^3.0",
+        "drupal/paragraphs": "^1.19",
         "drush/drush": "^13.6"
     },
     "require-dev": {

@@ -1,5 +1,8 @@
 <?php
 
+use Drupal\Core\Menu\MenuTreeParameters;
+use \Drupal\Core\Url;
+
 /**
  * Implements hook_preprocess_page().
  */
@@ -10,7 +13,11 @@ function skg_theme_preprocess_page(array &$variables) {
   $menu_name = 'main';
   $menu_tree = \Drupal::menuTree();
 
-  $parameters = $menu_tree->getCurrentRouteMenuTreeParameters($menu_name);
+  $parameters = new MenuTreeParameters();
+  $parameters->setMaxDepth(2);
+  $parameters->onlyEnabledLinks();
+  $parameters->expandedParents = [];
+
   $tree = $menu_tree->load($menu_name, $parameters);
 
   $manipulators = [
@@ -20,15 +27,35 @@ function skg_theme_preprocess_page(array &$variables) {
 
   $tree = $menu_tree->transform($tree, $manipulators);
 
+  $variables['main_navigation'] = $menu_tree->build($tree);
+
   $items = [];
+
   foreach ($tree as $element) {
-    $items[] = [
+    $url = $element->link->getUrlObject();
+    
+    $item = [
       'title' => $element->link->getTitle(),
-      'url' => $element->link->getUrlObject()->toString(),
+      'url' => $url->toString(),
+      'sub_menu' => [],
     ];
+
+    if (!empty($element->subtree)) {
+      foreach ($element->subtree as $subElement) {
+        $sub_url = $subElement->link->getUrlObject();
+
+        $item['sub_menu'][] = [
+          'title' => $subElement->link->getTitle(),
+          'url' => $sub_url->toString(),
+        ];
+      }
+    }
+
+    $items[] = $item;
   }
 
-  $variables['page']['top_navigation'] = $items;
+  $variables['top_navigation'] = $items;
+  $variables['test'] = $items;
 
   // -----------------------------
   // Footer
@@ -42,5 +69,76 @@ function skg_theme_preprocess_page(array &$variables) {
     $footer_content = str_replace('[current-year]', date('Y'), $footer_content);
 
     $variables['page']['footer'] = $footer_content;
+  }
+}
+
+/**
+ * Implements hook_preprocess_block__block_content_type_header_slideshow().
+ */
+function skg_theme_preprocess_block__block_content__type__header_slideshow(&$variables) {
+  /** @var \Drupal\block_content\Entity\BlockContent $block */
+  $block = $variables['content']['#block_content'];
+
+  if (!$block->hasField('field_cover_flow_slider')) {
+    return;
+  } 
+
+  $slides = [];
+
+  foreach ($block->get('field_cover_flow_slider')->referencedEntities() as $slide) {
+    $image_field = 'field_image_slider';
+    $link_field  = 'field_link';
+
+    $image_url = NULL;
+    $image_alt = NULL;
+    $link_url  = NULL;
+
+    // Image
+    if ($slide->hasField($image_field) && !$slide->get($image_field)->isEmpty()) {
+      $image_item = $slide->get($image_field)->first();
+      $file = $image_item->entity;
+      if ($file) {
+        $image_url = $file->createFileUrl();
+        $image_alt = $image_item->alt;
+      }
+    }
+
+    // Link
+    if ($slide->hasField($link_field) && !$slide->get($link_field)->isEmpty()) {
+      $link_item = $slide->get($link_field)->first();
+      $link_url = Url::fromUri($link_item->uri)->toString();
+    }
+
+    $slides[] = [
+      'image' => $image_url,
+      'link'  => $link_url,
+      'alt'   => $image_alt,
+    ];
+  }
+
+  $variables['slides'] = $slides;
+}
+
+/**
+ * Implements hook_preprocess_node__game_page().
+ */
+function skg_theme_preprocess_node__game_page(&$variables) {
+  $node = $variables['node'];
+
+  if ($node->hasField('field_title')) {
+    $field_title = $node->get('field_title')->value;
+
+    $variables['field_title'] = $field_title;
+  }
+
+  if ($node->hasField('body')) {
+    $variables['body_text'] = $variables['content']['body'];
+  }
+
+  if ($node->hasField('field_download')) {
+    $field_download = $node->get('field_download');
+    $field_download_url = Url::fromUri($field_download->uri)->toString();
+
+    $variables['download_link'] = $field_download_url;
   }
 }

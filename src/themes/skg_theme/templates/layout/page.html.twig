@@ -1,8 +1,8 @@
 <nav>
-  {% if page.top_navigation %}
+  {% if top_navigation %}
     {% include '@components/navigation-bar/navigation-bar.html.twig' with 
       { 
-        items: page.top_navigation 
+        items: top_navigation 
       } %}
   {% endif %}
 </nav>

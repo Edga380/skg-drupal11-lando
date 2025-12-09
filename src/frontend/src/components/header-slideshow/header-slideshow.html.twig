@@ -1,0 +1,18 @@
+<div class="header-slideshow">
+{% for slide in slides %}
+
+  {% set index = loop.index %}
+
+  {% if slide.link %}
+    <a href="{{ slide.link }}">
+  {% endif %}
+
+  {% if slide.image %}
+    <img src="{{ slide.image }}" class="header-slideshow__image-{{index}}" alt="{{ slide.alt }}">
+  {% endif %}
+
+  {% if slide.link %}
+    </a>
+  {% endif %}
+{% endfor %}
+</div>

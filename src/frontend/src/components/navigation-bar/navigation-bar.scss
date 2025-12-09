@@ -2,6 +2,8 @@
   background-color: var(--bg-secondary);
   display: flex;
   height: 3rem;
+  position: relative;
+  z-index: 50;
 
   &__logo {
     height: 100%;
@@ -17,12 +19,114 @@
     list-style: none;
   }
 
+  &__button {
+    position: relative;
+    background: transparent;
+    border: none;
+    color: var(--text);
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    font-size: large;
+    padding: 0 2.5rem 0 1.5rem;
+    user-select: none;
+    height: 100%;
+    transition: color 0.2s ease-in-out;
+
+    &:hover {
+      color: var(--text-hover);
+      background: var(--button-gradient);
+
+      &::before,
+      &::after {
+        background-color: var(--text-hover);
+      }
+    }
+
+    &::before,
+    &::after {
+      content: "";
+      position: absolute;
+      background-color: var(--text);
+      top: 50%;
+      width: 0.15rem;
+      height: 0.6rem;
+      border-radius: 30%;
+      transition: background-color 0.2s ease-in-out, transform 0.2s ease-in-out;
+      pointer-events: none;
+    }
+
+    &::before {
+      right: 1.4rem;
+      transform: translate(0%, -50%) rotate(-40deg);
+    }
+
+    &::after {
+      right: 1.1rem;
+      transform: translate(0%, -50%) rotate(40deg);
+    }
+
+    &.open {
+      color: var(--text-hover);
+      background: var(--button-gradient);
+      
+      &::before {
+        background-color: var(--text-hover);
+        right: 1.4rem;
+        transform: translate(0%, -50%) rotate(40deg);
+      }
+
+      &::after {
+        background-color: var(--text-hover);
+        right: 1.1rem;
+        transform: translate(0%, -50%) rotate(-40deg);
+      }
+    }
+  }
+
   &__item {
-    display: flex;
-    align-items: center;
+    position: relative;
 
     &:hover {
       background: var(--button-gradient);
+    }
+
+    &__sub-menu {
+      position: absolute;
+      background-color: var(--bg-secondary);
+      list-style: none;
+      top: 3rem;
+      overflow: hidden;
+      max-height: 0rem;
+      transition: max-height 0.2s ease-in-out;
+
+      &.open {
+        max-height: 20rem;
+        box-shadow: 0px 0px 5px var(--image-hover-border);
+        overflow: visible;
+      }
+    }
+
+    &__sub-menu-li {
+      display: flex;
+      flex-wrap: nowrap;
+      transition: color 0.2s ease-in-out;
+
+      a {
+        color: var(--text);
+        text-decoration: none;
+        font-size: large;
+        padding: 1rem 1.6rem;
+        text-wrap: nowrap;
+        width: 100%;
+        transition: color 0.2s ease-in-out;
+        user-select: none;
+      }
+
+      a:hover {
+        background: var(--button-gradient);
+        color: var(--text-hover);
+      }
     }
   }
   
@@ -33,8 +137,9 @@
     text-decoration: none;
     font-size: large;
     height: 100%;
-    padding: 0 1.6rem;
+    padding: 0 1.5rem;
     transition: color 0.2s ease-in-out;
+    user-select: none;
 
     &:hover {
       color: var(--text-hover);

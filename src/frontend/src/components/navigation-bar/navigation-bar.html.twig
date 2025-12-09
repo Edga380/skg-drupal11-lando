@@ -6,7 +6,6 @@
  * - items: array of menu items (each item can have 'url' and 'title')
  */
 #}
-
 {% if items %}
   <nav class="navigation-bar">
     <div>
@@ -17,7 +16,18 @@
     <ul class="navigation-bar__list">
       {% for item in items %}
         <li class="navigation-bar__item">
-          <a href="{{ item.url }}" class="navigation-bar__link">{{ item.title }}</a>
+          {% if not item.sub_menu %}
+            <a href="{{ item.url }}" class="navigation-bar__link">{{ item.title }}</a>
+          {% else %}
+            <button class="navigation-bar__button has-sub-menu" aria-label="Opens dropdown menu with a list of games.">{{ item.title }}</button>
+            <ul class="navigation-bar__item__sub-menu" aria-expanded="false" inert>
+              {% for sub_menu_item in item.sub_menu %}
+                <li class="navigation-bar__item__sub-menu-li">
+                  <a href="{{ sub_menu_item.url }}">{{ sub_menu_item.title }}</a>
+                </li>
+              {% endfor %}
+            </ul>
+          {% endif %}
         </li>
       {% endfor %}
     </ul>

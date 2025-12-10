@@ -1,0 +1,24 @@
+<section class="game-page-section">
+    <div class="game-page-section__content">
+        <h1 class="game-page-section__heading">{{content.title}}</h1>
+        <img class="game-page-section__main-image" src="{{main_image.url}}" alt="{{main_image.alt}}">
+        <div class="game-page-section__body-text">{{body_text}}</div>
+        <a href="{{download_link}}" class="game-page-section__download-button">Download</a>
+    </div>
+    <div class="game-page-section__slideshow">
+        <div class="game-page-section__hero-image-container">
+            <img class="game-page-section__hero-image" src="{{ slideshow_images.0.url }}" alt="{{ slideshow_images.0.alt }}">
+        </div>
+        <div class="game-page-section__controls">
+            <button class="game-page-section__left-arrow">Prev</button>
+            <div class="game-page-section__images-container">
+                {% if slideshow_images %}
+                    {% for slideshow_image in slideshow_images %}
+                        <img class="game-page-section__images" src="{{ slideshow_image.url }}" alt="{{ slideshow_image.alt }}">
+                    {% endfor %}
+                {% endif %}
+            </div>
+            <button class="game-page-section__right-arrow">Next</button>
+        </div>
+    </div>
+</section>

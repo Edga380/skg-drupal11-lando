@@ -6,7 +6,6 @@ const navigationBar = () => {
     buttonsHasSubMenu.forEach((buttonHasSubMenu) => {
         buttonHasSubMenu.addEventListener('click', (event) => {
             event.preventDefault();
-            closeSubMenus();
             const subMenu = buttonHasSubMenu.nextElementSibling;
             buttonHasSubMenu.classList.toggle('open');
             subMenu.classList.toggle('open');
@@ -17,6 +16,17 @@ const navigationBar = () => {
                 subMenu.setAttribute('aria-expanded', 'false');
                 subMenu.setAttribute('inert', '');
             }
+
+            // Close other subMenus if opening a different subMenu
+            buttonsHasSubMenu.forEach((buttonSubMenu) => {
+                if(buttonSubMenu !== buttonHasSubMenu) {
+                    const subMenuClose = buttonSubMenu.nextElementSibling;
+                    buttonSubMenu.classList.remove('open');
+                    subMenuClose.classList.remove('open');
+                    subMenuClose.setAttribute('aria-expanded', 'false');
+                    subMenuClose.setAttribute('inert', '');
+                }
+            });
         });
     });
 

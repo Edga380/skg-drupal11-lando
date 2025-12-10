@@ -33,7 +33,7 @@ function skg_theme_preprocess_page(array &$variables) {
 
   foreach ($tree as $element) {
     $url = $element->link->getUrlObject();
-    
+
     $item = [
       'title' => $element->link->getTitle(),
       'url' => $url->toString(),
@@ -126,9 +126,7 @@ function skg_theme_preprocess_node__game_page(&$variables) {
   $node = $variables['node'];
 
   if ($node->hasField('field_title')) {
-    $field_title = $node->get('field_title')->value;
-
-    $variables['field_title'] = $field_title;
+    $variables['field_title'] = $node->get('field_title')->value;
   }
 
   if ($node->hasField('body')) {
@@ -136,9 +134,34 @@ function skg_theme_preprocess_node__game_page(&$variables) {
   }
 
   if ($node->hasField('field_download')) {
-    $field_download = $node->get('field_download');
-    $field_download_url = Url::fromUri($field_download->uri)->toString();
-
-    $variables['download_link'] = $field_download_url;
+    $field_download = $node->get('field_download')->first();
+    $variables['download_link'] = $field_download?->uri ? Url::fromUri($field_download->uri)->toString() : NULL;
   }
+
+  if ($node->hasField('field_image')) {
+    $field_image = $node->get('field_image')->first();
+    $field_image_entity = $field_image->entity;
+
+    if ($field_image_entity) {
+      $variables['main_image'] = [
+        'url' => $field_image_entity->createFileUrl(),
+        'alt' => $field_image->alt
+      ];
+    }
+  }
+
+  $slideshow_images = [];
+
+  foreach ($node->get('field_slideshow')->referencedEntities() as $paragraph) {
+    foreach ($paragraph->get('field_image_slider') as $image_file) {
+      if ($image_file?->entity) {
+        $slideshow_images[] = [
+          'url' => $image_file->entity->createFileUrl(),
+          'alt' => $image_file->alt,
+        ];
+      }
+    }
+  }
+
+  $variables['slideshow_images'] = $slideshow_images;
 }
